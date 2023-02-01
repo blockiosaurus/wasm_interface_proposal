@@ -1,28 +1,30 @@
 [package]
-name = "my-program-name"
+name = "zero-copy-test"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
 
 [dependencies]
-solana-program = "=1.13.3"
+solana-program = "1.14"
 shank = "0.0.10"
 borsh = "0.9.3"
 thiserror = "~1.0"
 num-derive = "0.3.3"
 num-traits = "~0.2"
-
+rkyv = "0.7.39"
+mpl-utils = "0.0.6"
+wasm-bindgen = "0.2.83"
 
 [features]
 test-bpf = []
 
 [dev-dependencies]
 assert_matches = "1.5.0"
-solana-program-test = "=1.13.3"
-solana-sdk = "=1.13.3"
-solana-validator = "=1.13.3"
-solana-logger = "=1.13.3"
+solana-program-test = "1.14"
+solana-sdk = "1.14"
+solana-validator = "1.14"
+solana-logger = "1.14"
 
 [lib]
 crate-type = ["cdylib", "lib"]
