@@ -1,7 +1,7 @@
 use crate::{
     error::ErrorThingy,
     instruction::{InstructionThingArgs, InstructionThingy},
-    state::AccountThingy,
+    state::{MasterEdition, MetadataAccount, Royalties},
 };
 use borsh::BorshDeserialize;
 use mpl_utils::{assert_derivation, create_or_allocate_account_raw};
@@ -65,15 +65,21 @@ fn process_instruction_thing(
         seeds,
     )?;
 
-    let data = AccountThingy { thing: args.value };
+    let data = MetadataAccount {
+        name: "test".to_string(),
+        description: "test".to_string(),
+        uri: "test".to_string(),
+        master_edition: MasterEdition::default(),
+        royalties: Royalties::default(),
+    };
 
-    let serialized_data = rkyv::to_bytes::<AccountThingy, 100>(&data).unwrap();
+    let serialized_data = rkyv::to_bytes::<MetadataAccount, 100>(&data).unwrap();
 
     sol_memcpy(
-        &mut **writable_account
+        &mut writable_account
             .try_borrow_mut_data()
             .map_err(|_| ErrorThingy::ErrorName)?,
-        &serialized_data.as_slice(),
+        serialized_data.as_slice(),
         serialized_data.len(),
     );
 
